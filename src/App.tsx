@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import "../src/styles/TagList.scss";
-import PaginatedTagsList from "./components/PaginatedTagsList";
+import PaginatedTagsList from "./PaginatedTagsList";
 import {Typography} from "@mui/material";
 
 function App() {

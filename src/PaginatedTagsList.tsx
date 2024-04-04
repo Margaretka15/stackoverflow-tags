@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ITag} from "../interfaces/ITag";
-import {getAllTags} from "../services/DataService";
+import {ITag} from "./interfaces/ITag";
+import {getAllTags} from "./services/DataService";
 import {MenuItem, Select, TextField} from "@mui/material";
-import TagList from "./TagList";
-import {sortData} from '../utils/ManageData';
+import TagList from "./components/TagList";
+import {sortData} from './utils/ManageData';
 
-import Loader from "./Loader";
-import PaginationPanel from "./PaginationPanel";
+import Loader from "./components/Loader";
+import PaginationPanel from "./components/PaginationPanel";
 
 type TLoadingState = {
     isLoading: boolean;
@@ -18,6 +18,7 @@ type TPaginationState = {
     totalPages: number;
 }
 
+type TSortOptions = "mostPopular" | "leastPopular" | "alphabetical";
 export default function PaginatedTagsList() {
 
     const [tags, setTags] = useState<ITag[]>();
@@ -33,6 +34,8 @@ export default function PaginatedTagsList() {
         totalPages: 1
     })
 
+    const [sortOption, setSortOption] = useState<TSortOptions>('mostPopular');
+
     useEffect(() => {
         const fetchData = async () => {
             setLoadingState({...loadingState, isLoading: true})
@@ -45,9 +48,7 @@ export default function PaginatedTagsList() {
                     totalPages: Math.ceil(data.items.length / paginationState.countPerPage)
                 });
 
-
             } catch (error) {
-                console.error('Błąd pobierania danych:', error);
                 setLoadingState({...loadingState, isError: true});
             }
         };
@@ -86,33 +87,27 @@ export default function PaginatedTagsList() {
         })
     }
 
-    const [sortOption, setSortOption] = useState('mostPopular');
-
     const start = (paginationState.page - 1) * paginationState.countPerPage;
-
     const end = (paginationState.page - 1) * paginationState.countPerPage + paginationState.countPerPage;
-
     const sortedTags = sortData(tags, sortOption);
 
     const handleSortChange = (e: any) => {
         setSortOption(e.target.value);
         setPaginationState({
             ...paginationState,
-            page:  1
+            page: 1
         });
     };
-
 
     let content;
     if (loadingState.isLoading) {
         content = <Loader/>
-    }
-    else if (!loadingState.isError) {
-       content =  <TagList tags={sortedTags.slice(start, end)}/>
-    }
-    else {
+    } else if (!loadingState.isError) {
+        content = <TagList tags={sortedTags.slice(start, end)}/>
+    } else {
         content = <div>An unexpected error occured.</div>
     }
+
     return (
         <div className="list-section">
             <div className="sort-options-container">
@@ -132,7 +127,8 @@ export default function PaginatedTagsList() {
 
             {content}
 
-            <PaginationPanel totalPages={paginationState.totalPages} page={paginationState.page} callback={handleChange} />
+            <PaginationPanel totalPages={paginationState.totalPages} page={paginationState.page}
+                             callback={handleChange}/>
 
 
         </div>

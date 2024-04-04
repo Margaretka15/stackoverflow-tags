@@ -11,7 +11,6 @@ const TagList = ({tags}: PropType) => {
     return (
         <div className="table-wrapper">
             <TableContainer component={Paper}>
-
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -33,7 +32,6 @@ const TagList = ({tags}: PropType) => {
                         ))}
                     </TableBody>
                 </Table>
-
             </TableContainer>
 
         </div>
