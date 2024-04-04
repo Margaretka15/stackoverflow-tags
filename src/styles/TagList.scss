@@ -1,0 +1,22 @@
+.list-section {
+  margin: 0 auto;
+  width: 60%;
+
+  .sort-options-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  .table-wrapper {
+    overflow-y: scroll;
+    height: 60vh;
+  }
+
+  .pagination-wrapper {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+}
+

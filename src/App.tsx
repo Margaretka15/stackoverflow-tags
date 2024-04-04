@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
+import "../src/styles/TagList.scss";
+import PaginatedTagsList from "./components/PaginatedTagsList";
+import {Typography} from "@mui/material";
 
 function App() {
   return (
     <div className="App">
-      StackOverflow Tags
+        <Typography variant={'h1'} fontSize={30}> StackOverflow Tags </Typography>
+        <PaginatedTagsList/>
     </div>
   );
 }
